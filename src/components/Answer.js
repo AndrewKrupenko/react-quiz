@@ -1,8 +1,8 @@
-const Answer = () => {
+const Answer = ({ answer }) => {
   return (
     <div className="answer">
       <div className="answer-letter">A</div>
-      <div className="answer-text">Text of the answer</div>
+      <div className="answer-text">{ answer }</div>
     </div>
   )
 }
