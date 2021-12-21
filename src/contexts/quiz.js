@@ -7,29 +7,49 @@ const initialState = {
   currentQuestionIndex: 0,
   showResults: false,
   answers: shuffleAnswers(questions[0]),
+  currentAnswer: '',
+  correctAnswersCount: 0,
 }
 
 const reducer = (state, action) => {
-  if (action.type === 'NEXT_QUESTION') {
-    const showResults = state.currentQuestionIndex === state.questions.length - 1
-    const currentQuestionIndex = showResults
-      ? state.currentQuestionIndex
-      : state.currentQuestionIndex + 1
-    const answers = showResults
-      ? []
-      : shuffleAnswers(state.questions[currentQuestionIndex]) // Found a question object and got answers from it
+  switch (action.type) {
+    case "SELECT_ANSWER": {
+      const correctAnswersCount =
+        action.payload ===
+        state.questions[state.currentQuestionIndex].correctAnswer
+          ? state.correctAnswersCount + 1
+          : state.correctAnswersCount
 
-    return {
-      ...state,
-      currentQuestionIndex,
-      showResults,
-      answers,
+      return {
+        ...state,
+        currentAnswer: action.payload,
+        correctAnswersCount,
+      }
     }
-  } else if (action.type === 'RESTART_QUIZ') {
-    return initialState
-  }
+    case "NEXT_QUESTION": {
+      const showResults = state.currentQuestionIndex === state.questions.length - 1
+      const currentQuestionIndex = showResults
+        ? state.currentQuestionIndex
+        : state.currentQuestionIndex + 1
+      const answers = showResults
+        ? []
+        : shuffleAnswers(state.questions[currentQuestionIndex]) // Found a question object and got answers from it
 
-  return state
+      return {
+        ...state,
+        currentQuestionIndex,
+        showResults,
+        answers,
+        currentAnswer: "", // there is no answer yet, only opened next question
+      }
+    }
+    case "RESTART_QUIZ": {
+      return initialState
+    }
+    default: {
+      return state
+    }
+  }
 }
 
 export const QuizContext = createContext()

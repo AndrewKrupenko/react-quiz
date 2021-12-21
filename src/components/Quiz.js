@@ -14,7 +14,9 @@ const Quiz = () => {
           <div className="congratulations">Congratulations</div>
           <div className="results-info">
             <div>You have completed the quiz</div>
-            <div>You've got 4 out of 8 points</div>
+            <div>
+              You've got {quizState.correctAnswersCount} out of {quizState.questions.length} points
+            </div>
             <button
               className="next-button"
               onClick={handleRestartQuiz}

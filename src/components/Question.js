@@ -11,8 +11,17 @@ const Question = () => {
         {currentQuestion.question}
       </div>
       <div className="answers">
-        {quizState.answers.map(answer => (
-          <Answer key={answer} answer={answer} />
+        {quizState.answers.map((answer, index) => (
+          <Answer
+            key={answer}
+            index={index}
+            answer={answer}
+            correctAnswer={currentQuestion.correctAnswer}
+            currentAnswer={quizState.currentAnswer}
+            onSelectAnswer={answer =>
+              dispatch({ type: "SELECT_ANSWER", payload: answer })
+            }
+          />
         ))}
       </div>
     </div>
