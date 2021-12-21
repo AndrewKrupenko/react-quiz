@@ -8,7 +8,6 @@ const data = [
     ],
     correctAnswer: "Cascading Style Sheets",
   },
-
   {
     question:
       "Where in an HTML document is the correct place to refer to an external style sheet?",
@@ -60,7 +59,7 @@ const data = [
       "h1.all {background-color:#FFFFFF;}",
     ],
     correctAnswer: "h1 {background-color:#FFFFFF;}",
-  },
-];
+  }
+]
 
-export default data;
+export default data

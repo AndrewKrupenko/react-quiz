@@ -9,7 +9,9 @@ const Quiz = () => {
   return (
     <div className="quiz">
       <div>
-        <div className="score">Question 1/10</div>
+        <div className="score">
+          Question {quizState.currentQuestionIndex + 1}/{quizState.questions.length}
+        </div>
         <Question />
         <button
           className="next-button"
