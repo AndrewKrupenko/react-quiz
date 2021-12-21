@@ -5,21 +5,38 @@ import { QuizContext } from "../contexts/quiz"
 const Quiz = () => {
   const [quizState, dispatch] = useContext(QuizContext)
   const handleClickNext = () => dispatch({ type: "NEXT_QUESTION" })
+  const handleRestartQuiz = () => dispatch({ type: "RESTART_QUIZ" })
 
   return (
     <div className="quiz">
-      <div>
-        <div className="score">
-          Question {quizState.currentQuestionIndex + 1}/{quizState.questions.length}
+      {quizState.showResults ? (
+        <div className="results">
+          <div className="congratulations">Congratulations</div>
+          <div className="results-info">
+            <div>You have completed the quiz</div>
+            <div>You've got 4 out of 8 points</div>
+            <button
+              className="next-button"
+              onClick={handleRestartQuiz}
+            >
+              Restart
+            </button>
+          </div>
         </div>
-        <Question />
-        <button
-          className="next-button"
-          onClick={handleClickNext}
-        >
-          Next Question
-        </button>
-      </div>
+      ) : (
+        <div>
+          <div className="score">
+            Question {quizState.currentQuestionIndex + 1}/{quizState.questions.length}
+          </div>
+          <Question />
+          <button
+            className="next-button"
+            onClick={handleClickNext}
+          >
+            Next Question
+          </button>
+        </div>
+      )}
     </div>
   )
 }
