@@ -1,23 +1,10 @@
 import Question from "./Question"
-import { useReducer } from "react"
-
-const initialState = {
-  questions: [],
-  currentQuestionIndex: 0,
-}
-
-const reducer = (state, action) => {
-  if (action.type === 'NEXT_QUESTION') {
-    return {
-      ...state,
-      currentQuestionIndex: state.currentQuestionIndex + 1,
-    }
-  }
-  return state
-}
+import { useContext } from "react"
+import { QuizContext } from "../contexts/quiz"
 
 const Quiz = () => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [quizState, dispatch] = useContext(QuizContext)
+  const handleClickNext = () => dispatch({ type: "NEXT_QUESTION" })
 
   return (
     <div className="quiz">
@@ -26,7 +13,7 @@ const Quiz = () => {
         <Question />
         <button
           className="next-button"
-          onClick={() => dispatch({ type: "NEXT_QUESTION" })}
+          onClick={handleClickNext}
         >
           Next Question
         </button>
