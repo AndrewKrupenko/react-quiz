@@ -4,7 +4,7 @@ const Answer = ({
   correctAnswer,
   currentAnswer,
   onSelectAnswer
-  }) => {
+}) => {
   const letterMapping = ["A", "B", "C", "D"]
   // If we already have answered and answer is equal to correct value
   const isCorrectAnswer = currentAnswer && answer === correctAnswer

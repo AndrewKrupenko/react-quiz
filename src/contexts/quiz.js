@@ -1,12 +1,11 @@
 import { createContext, useReducer } from "react"
-import questions from "../data"
-import { shuffleAnswers } from "../helpers"
+import {normalizeData, shuffleAnswers} from "../helpers"
 
 const initialState = {
-  questions: questions,
+  questions: [],
   currentQuestionIndex: 0,
   showResults: false,
-  answers: shuffleAnswers(questions[0]),
+  answers: [],
   currentAnswer: '',
   correctAnswersCount: 0,
 }
@@ -45,6 +44,14 @@ const reducer = (state, action) => {
     }
     case "RESTART_QUIZ": {
       return initialState
+    }
+    case "LOADED_QUESTIONS": {
+      const normalizedData = normalizeData(action.payload)
+      return {
+        ...state,
+        questions: normalizedData,
+        answers: shuffleAnswers(normalizedData[0]),
+      }
     }
     default: {
       return state

@@ -1,5 +1,5 @@
 import Question from "./Question"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { QuizContext } from "../contexts/quiz"
 
 const Quiz = () => {
@@ -7,9 +7,23 @@ const Quiz = () => {
   const handleClickNext = () => dispatch({ type: "NEXT_QUESTION" })
   const handleRestartQuiz = () => dispatch({ type: "RESTART_QUIZ" })
 
+  const apiUrl = 'https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple&encode=url3986'
+
+  useEffect(() => {
+    if (quizState.questions.length) {
+      return
+    }
+
+    fetch(apiUrl)
+      .then(res => res.json())
+      .then(data => {
+        dispatch({ type: 'LOADED_QUESTIONS', payload: data.results })
+      })
+  })
+
   return (
     <div className="quiz">
-      {quizState.showResults ? (
+      {quizState.showResults && (
         <div className="results">
           <div className="congratulations">Congratulations</div>
           <div className="results-info">
@@ -17,15 +31,16 @@ const Quiz = () => {
             <div>
               You've got {quizState.correctAnswersCount} out of {quizState.questions.length} points
             </div>
-            <button
-              className="next-button"
-              onClick={handleRestartQuiz}
-            >
-              Restart
-            </button>
           </div>
+          <button
+            className="next-button"
+            onClick={handleRestartQuiz}
+          >
+            Restart
+          </button>
         </div>
-      ) : (
+      )}
+      {!quizState.showResults && quizState.questions.length && (
         <div>
           <div className="score">
             Question {quizState.currentQuestionIndex + 1}/{quizState.questions.length}
